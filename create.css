@@ -1,0 +1,2028 @@
+.create-section {
+    max-width: 600px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 26px;
+    padding: 40px;
+    margin: 0 auto;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.main-content:has(.create-section) {
+    background: #f0f0f0;
+}
+
+.create-wizard {
+    position: relative;
+    padding-bottom: 56px;
+}
+
+/* Margens verticais profissionais no passo 2 */
+.create-step-2 {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+
+.create-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+/* Passo 1: pergunta e opções */
+.wizard-question {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.wizard-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 28px;
+}
+
+.wizard-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    padding: 16px 20px;
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.18s ease;
+    flex: 1;
+    min-width: 160px;
+    max-width: 220px;
+}
+
+.wizard-option:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.wizard-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.wizard-option input[type="radio"]:checked + .wizard-option-radio {
+    border-color: #000000;
+    background: transparent;
+}
+
+.wizard-option input[type="radio"]:checked + .wizard-option-radio::before,
+.wizard-option input[type="radio"]:checked + .wizard-option-radio::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 2px;
+    height: 10px;
+    background: #000000;
+}
+
+.wizard-option input[type="radio"]:checked + .wizard-option-radio::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.wizard-option input[type="radio"]:checked + .wizard-option-radio::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.wizard-option-radio {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #666666;
+    border-radius: 50%;
+    position: relative;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.25s ease;
+}
+
+.wizard-option-radio.wizard-option-radio--selected {
+    animation: wizard-option-pulse 0.4s ease;
+}
+
+@keyframes wizard-option-pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.wizard-option-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+}
+
+.wizard-option-label {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #000000;
+}
+
+.wizard-option-example {
+    font-size: 0.85rem;
+    color: #888888;
+    line-height: 1.3;
+}
+
+.wizard-step-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.wizard-step-actions--with-back {
+    justify-content: space-between;
+}
+
+.btn-continuar,
+.btn-voltar {
+    padding: 12px 20px;
+    min-width: 100px;
+    min-height: 44px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease, opacity 0.18s ease;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.btn-continuar {
+    background: #000000;
+    color: #ffffff;
+    border: 2px solid #000000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-continuar:hover:not(:disabled) {
+    transform: scale(1.04);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.btn-continuar:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.btn-continuar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #e5e7eb;
+    color: #9ca3af;
+    border-color: #d1d5db;
+    box-shadow: none;
+}
+
+.btn-voltar {
+    background: #000000;
+    color: #ffffff;
+    border: 2px solid #000000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-voltar:hover {
+    transform: scale(1.04);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.btn-voltar:active {
+    transform: scale(0.98);
+}
+
+/* Indicador de progresso: bolinhas animadas, pequeno no cantinho (baseado em Uiverse.io by mobinkakei) */
+.wizard-progress {
+    position: absolute;
+    bottom: 12px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    z-index: 1;
+}
+
+.wizard-progress-dots.wrapper {
+    width: 72px;
+    height: 28px;
+    position: relative;
+    z-index: 1;
+}
+
+.wizard-progress-dots .circle {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #fff;
+    transform-origin: 50%;
+    animation: wizard-dot-bounce 0.5s alternate infinite ease;
+    border: 1px solid #e5e7eb;
+    box-sizing: border-box;
+}
+
+.wizard-progress-dots .circle.done {
+    background-color: #22c55e;
+    border-color: #22c55e;
+    /* mantém a animação de quique quando verde */
+}
+
+@keyframes wizard-dot-bounce {
+    0% {
+        top: 28px;
+        height: 3px;
+        border-radius: 20px 20px 10px 10px;
+        transform: scaleX(1.7) translateY(-50%);
+    }
+    40% {
+        height: 10px;
+        border-radius: 50%;
+        transform: scaleX(1) translateY(-50%);
+    }
+    100% {
+        top: 0;
+        transform: translateY(-50%);
+    }
+}
+
+.wizard-progress-dots .circle:nth-child(1) {
+    left: 0;
+}
+.wizard-progress-dots .circle:nth-child(2) {
+    left: 33.33%;
+    margin-left: -5px;
+    animation-delay: 0.15s;
+}
+.wizard-progress-dots .circle:nth-child(3) {
+    left: 66.66%;
+    margin-left: -5px;
+    animation-delay: 0.3s;
+}
+.wizard-progress-dots .circle:nth-child(4) {
+    left: 100%;
+    margin-left: -10px;
+    animation-delay: 0.45s;
+}
+
+/* Última bolinha pisca para o verde (só cor; o quique segue suave) no hover do botão Criar Rotina */
+.wizard-progress.wizard-progress--create-hover .wizard-progress-dots .circle:nth-child(4) {
+    animation: wizard-dot-bounce 0.5s alternate infinite ease, wizard-dot-pulse-green 1.4s ease-in-out infinite;
+}
+
+.wizard-progress.wizard-progress--create-hover .wizard-progress-dots .circle:nth-child(4).done {
+    animation: wizard-dot-bounce 0.5s alternate infinite ease, wizard-dot-pulse-green-done 1.4s ease-in-out infinite;
+}
+
+/* Branca → verde → branca (não mexe em transform para não cortar o quique) */
+@keyframes wizard-dot-pulse-green {
+    0%, 100% {
+        background-color: #fff;
+        border-color: #e5e7eb;
+        box-shadow: none;
+    }
+    50% {
+        background-color: #22c55e;
+        border-color: #22c55e;
+        box-shadow: 0 2px 8px rgba(34, 197, 94, 0.35);
+    }
+}
+
+/* Já verde: só intensifica e volta (não mexe em transform) */
+@keyframes wizard-dot-pulse-green-done {
+    0%, 100% {
+        background-color: #22c55e;
+        border-color: #22c55e;
+        box-shadow: 0 0 8px #22c55e;
+    }
+    50% {
+        background-color: #5dff3d;
+        border-color: #5dff3d;
+        box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4);
+    }
+}
+
+.wizard-progress-dots .shadow {
+    width: 10px;
+    height: 2px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 30px;
+    transform-origin: 50%;
+    z-index: -1;
+    left: 12%;
+    filter: blur(0.5px);
+    animation: wizard-dot-shadow 0.5s alternate infinite ease;
+}
+
+.wizard-progress-dots .shadow:nth-child(5) { left: 0; animation-delay: 0s; }
+.wizard-progress-dots .shadow:nth-child(6) { left: 33.33%; margin-left: -5px; animation-delay: 0.15s; }
+.wizard-progress-dots .shadow:nth-child(7) { left: 66.66%; margin-left: -5px; animation-delay: 0.3s; }
+.wizard-progress-dots .shadow:nth-child(8) { left: 100%; margin-left: -10px; animation-delay: 0.45s; }
+
+@keyframes wizard-dot-shadow {
+    0% {
+        transform: scaleX(1.5);
+    }
+    40% {
+        transform: scaleX(1);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scaleX(0.2);
+        opacity: 0.4;
+    }
+}
+
+/* Barra de carregamento (durante criação da rotina) */
+.wizard-progress-loading-bar {
+    display: none;
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background: #e8e8e8;
+    overflow: hidden;
+}
+
+.wizard-progress.wizard-progress--loading .wizard-progress-loading-bar {
+    display: block;
+    animation: wizard-loading 1.2s ease-in-out infinite;
+}
+
+.wizard-progress.wizard-progress--loading .wizard-progress-loading-bar::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 30%;
+    border-radius: 2px;
+    background: #22c55e;
+    animation: wizard-loading-bar 1.2s ease-in-out infinite;
+}
+
+@keyframes wizard-loading {
+    0% { opacity: 1; }
+    100% { opacity: 1; }
+}
+
+@keyframes wizard-loading-bar {
+    0% { left: -30%; }
+    100% { left: 100%; }
+}
+
+/* Passo 2: Sobre a tarefa e bullet journal */
+.wizard-step-heading {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #666666;
+    text-align: center;
+    margin: 0 0 18px 0;
+}
+
+.bullet-journal-section {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.bullet-journal-labels {
+    font-size: 0.8rem;
+    color: #666666;
+    margin: 0 0 2px 0;
+}
+
+.bullet-journal-label--above {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #000000;
+}
+
+.bullet-journal-label--below {
+    margin-top: 14px;
+    margin-bottom: 0;
+    font-size: 0.85rem;
+    color: #666666;
+}
+
+.bullet-journal-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 0;
+}
+
+.bullet-option {
+    flex: 0 0 120px;
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+    cursor: pointer;
+    display: block;
+}
+
+.bullet-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.bullet-option-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 12px;
+    background: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.bullet-option:hover .bullet-option-box {
+    background: #f5f5f5;
+}
+
+.bullet-option input[type="radio"]:checked + .bullet-option-box {
+    border: 2px solid #000000;
+    background: #ffffff;
+}
+
+.bullet-symbol {
+    display: block;
+    flex-shrink: 0;
+}
+
+.bullet-symbol--reminder {
+    width: 24px;
+    height: 2px;
+    background: #000000;
+}
+
+.bullet-symbol--task {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #666666;
+}
+
+.bullet-symbol--commitment {
+    width: 14px;
+    height: 14px;
+    border: 2px solid #000000;
+    border-radius: 50%;
+    background: transparent;
+}
+
+.bullet-symbol--important {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #dc2626;
+    transition: background 0.35s ease, box-shadow 0.35s ease;
+}
+
+.bullet-option:has(.bullet-symbol--important):hover .bullet-symbol--important,
+.bullet-option:has(.bullet-symbol--important) input[type="radio"]:checked + .bullet-option-box .bullet-symbol--important {
+    background: #ff1744;
+    box-shadow: 0 0 8px 2px rgba(255, 23, 68, 0.9), 0 0 20px 4px rgba(255, 23, 68, 0.5);
+}
+
+.bullet-option-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #000000;
+}
+
+.create-form {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #000000;
+}
+
+.task-name-label {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.form-input-task-name {
+    padding: 16px 18px;
+    min-height: 48px;
+    border: 1px solid #999999;
+}
+
+.form-input-task-name::placeholder {
+    color: #b0b0b0;
+}
+
+.category-hint {
+    font-size: 0.85rem;
+    color: #666666;
+    margin-bottom: 12px;
+}
+
+.category-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.category-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 20px;
+    background: #ffffff;
+    border: 2px solid #e5e5e5;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #333333;
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.category-chip:hover {
+    border-color: #999999;
+    background: #f9f9f9;
+    transform: scale(1.04);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.category-chip:active {
+    transform: scale(0.98);
+}
+
+.category-chip.selected {
+    background: #000000;
+    border-color: #000000;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.category-chip.selected:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.category-chip.selected svg,
+.category-chip.selected .lucide {
+    color: #ffffff;
+    stroke: #ffffff;
+}
+
+.category-chip .chip-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-chip .chip-icon svg,
+.category-chip .chip-icon .lucide {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 14px 16px;
+    background: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: #000000;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: #999999;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.15);
+}
+
+.form-input-task-name:focus {
+    border-color: #333;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.12);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* ========== Passo 3: Detalhes da rotina ========== */
+.create-step-3 {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
+
+.details-subtitle {
+    font-size: 0.95rem;
+    color: #666666;
+    text-align: center;
+    margin: -8px 0 12px 0;
+}
+
+.details-intro {
+    font-size: 0.9rem;
+    color: #555555;
+    text-align: center;
+    margin: 0 0 24px 0;
+    line-height: 1.45;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.details-more {
+    margin-bottom: 16px;
+}
+
+.btn-show-more {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #6b7280;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    font-family: inherit;
+}
+
+.btn-show-more:hover {
+    background: #e5e7eb;
+    border-color: #d1d5db;
+    color: #374151;
+    transform: scale(1.04);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.btn-show-more:active {
+    transform: scale(0.98);
+}
+
+.btn-show-more-icon {
+    font-size: 0.7rem;
+    transition: transform 0.2s ease;
+}
+
+.details-more.expanded .btn-show-more-icon {
+    transform: rotate(180deg);
+}
+
+.details-more-content {
+    margin-top: 16px;
+}
+
+.details-more-content[hidden] {
+    display: none !important;
+}
+
+.detail-card {
+    background: #F9FAFB;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+}
+
+.detail-card--highlight {
+    border-color: #d1d5db;
+    background: #f8f9fb;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.detail-card-label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 4px;
+}
+
+.detail-card-hint {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin: 0 0 10px 0;
+}
+
+.detail-card .form-textarea--compact {
+    min-height: 3.6em;
+    max-height: 200px;
+    resize: none;
+    overflow-y: auto;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+.detail-card .form-textarea--compact:focus {
+    border-color: #9ca3af;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.06);
+}
+
+.detail-card-example {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin: 8px 0 0 0;
+}
+
+.field-hint {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin: 0 0 8px 0;
+}
+
+/* Passo 4: duas colunas (Horário | Dias), centralizado e igualado */
+.create-step-4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+    justify-items: center;
+}
+
+.create-step-4 .create-title {
+    grid-column: 1 / -1;
+}
+
+.create-step-4 #routineTimeGroup {
+    grid-column: 1;
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create-step-4 #step4WeekdaysGroup {
+    grid-column: 2;
+    width: 100%;
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create-step-4 #step4MonthlyGroup {
+    grid-column: 2;
+}
+
+.step4-monthly-title {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+    text-align: center;
+    margin: 0 0 4px 0;
+}
+
+.step4-monthly-subtitle {
+    font-size: 0.85rem;
+    color: #374151;
+    text-align: center;
+    margin: 0 0 16px 0;
+    line-height: 1.4;
+}
+
+@media (max-width: 640px) {
+    .create-step-4 {
+        grid-template-columns: 1fr;
+    }
+    .create-step-4 #routineTimeGroup,
+    .create-step-4 #step4WeekdaysGroup,
+    .create-step-4 #step4MonthlyGroup {
+        grid-column: 1;
+    }
+}
+
+/* Horário: bloco centralizado */
+.form-group--centered {
+    align-items: center;
+    text-align: center;
+}
+
+.form-group--centered .time-group-label,
+.form-group--centered .time-group-hint {
+    text-align: center;
+}
+.form-group--centered .time-group-label {
+    display: flex;
+    justify-content: center;
+}
+
+/* Opções de horário: Sem horário fixo / Horário fixo diário */
+.time-choice-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.time-choice-options--step4 {
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Monthly: mesma disposição (coluna) e centralizado */
+.create-step-4 #step4MonthlyGroup .monthly-type-options {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 28px;
+}
+
+/* Diário: dois cards como no mensal (Todos os dias / Dias específicos) */
+.step4-daily-days-title {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+    text-align: center;
+    margin: 0 0 4px 0;
+    width: 100%;
+}
+.step4-daily-days-subtitle {
+    font-size: 0.85rem;
+    color: #6b7280;
+    text-align: center;
+    margin: 0 0 16px 0;
+    width: 100%;
+}
+.create-step-4 #step4WeekdaysGroup .daily-day-type-options {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.create-step-4 #step4WeekdaysGroup .daily-day-type-option {
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+}
+#step4WeekdaysGroup .daily-day-type-option:not(:has(input:checked)) {
+    opacity: 0.65;
+    background: #f3f4f6;
+    border-color: #e5e7eb;
+}
+#step4WeekdaysGroup .daily-day-type-option:not(:has(input:checked)) .time-choice-label,
+#step4WeekdaysGroup .daily-day-type-option:not(:has(input:checked)) .time-choice-subtitle {
+    color: #000;
+}
+#step4WeekdaysGroup .daily-day-type-option:not(:has(input:checked)) .time-choice-subtitle {
+    color: #6b7280;
+}
+#step4WeekdaysGroup .daily-day-type-option:has(input:checked) {
+    opacity: 1;
+    background: #000;
+    border-color: #000;
+}
+#step4WeekdaysGroup .daily-day-type-option:has(input:checked) .time-choice-label,
+#step4WeekdaysGroup .daily-day-type-option:has(input:checked) .time-choice-subtitle {
+    color: #fff;
+}
+#step4WeekdaysGroup .daily-day-type-option .time-choice-radio {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+#step4WeekdaysGroup .daily-day-type-option:has(input:checked) .time-choice-radio::after {
+    content: none;
+}
+#step4WeekdaysGroup .daily-day-type-option:not(:has(input:checked)):hover {
+    opacity: 0.9;
+    background: #e5e7eb;
+}
+#step4WeekdaysGroup .daily-day-type-option:has(input:checked):hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+.daily-specific-days {
+    margin-top: 16px;
+}
+.daily-specific-days-hint {
+    margin-bottom: 10px;
+}
+.weekdays-checkboxes-wrap {
+    margin-top: 12px;
+}
+
+/* Animação suave ao abrir o passo 4 */
+@keyframes step4ContentEnter {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.wizard-step-4-visible #routineTimeGroup .step4-time-title,
+.wizard-step-4-visible #routineTimeGroup .step4-time-subtitle,
+.wizard-step-4-visible #routineTimeGroup .time-choice-options {
+    animation: step4ContentEnter 0.4s ease forwards;
+}
+
+.wizard-step-4-visible #routineTimeGroup .time-choice-options {
+    animation-delay: 0.05s;
+    opacity: 0;
+}
+
+.wizard-step-4-visible #step4MonthlyGroup .step4-monthly-title,
+.wizard-step-4-visible #step4MonthlyGroup .step4-monthly-subtitle,
+.wizard-step-4-visible #step4MonthlyGroup .monthly-type-options {
+    animation: step4ContentEnter 0.4s ease forwards;
+}
+
+.wizard-step-4-visible #step4MonthlyGroup .monthly-type-options {
+    animation-delay: 0.08s;
+    opacity: 0;
+}
+
+.time-choice-option--card {
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 36px 16px 16px 16px;
+    gap: 6px;
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+    min-height: 120px;
+    box-sizing: border-box;
+    transition: background 0.28s ease, border-color 0.28s ease, color 0.28s ease, opacity 0.28s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.time-choice-option--card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.time-choice-option--card .time-choice-radio,
+#routineTimeGroup .time-choice-option .time-choice-radio,
+#step4MonthlyGroup .monthly-type-option .time-choice-radio {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    margin: 0;
+    transform: translateX(-50%);
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: none;
+}
+
+
+.time-choice-option--card .time-choice-label {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #000;
+    margin-top: 8px;
+}
+
+.time-choice-subtitle {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #374151;
+    line-height: 1.4;
+}
+
+/* Horário: mesmo modelo do mensal — não selecionado = suave; selecionado = preto e branco */
+#routineTimeGroup .time-choice-option:not(:has(input:checked)) {
+    opacity: 0.65;
+    background: #f3f4f6;
+    border-color: #e5e7eb;
+}
+#routineTimeGroup .time-choice-option:not(:has(input:checked)) .time-choice-label {
+    color: #000;
+}
+#routineTimeGroup .time-choice-option:not(:has(input:checked)) .time-choice-subtitle {
+    color: #6b7280;
+}
+#routineTimeGroup .time-choice-option:not(:has(input:checked)):hover {
+    opacity: 0.9;
+    background: #e5e7eb;
+}
+#routineTimeGroup .time-choice-option:has(input:checked) {
+    opacity: 1;
+    background: #000;
+    border-color: #000;
+    position: relative;
+}
+#routineTimeGroup .time-choice-option:has(input:checked) .time-choice-label,
+#routineTimeGroup .time-choice-option:has(input:checked) .time-choice-subtitle {
+    color: #fff;
+}
+#routineTimeGroup .time-choice-option:has(input:checked) .time-choice-radio::after {
+    content: none;
+}
+#routineTimeGroup .time-choice-option:has(input:checked):hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.time-choice-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 6px 16px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+.time-choice-value {
+    font-weight: 600;
+    color: #111827;
+    margin-left: 4px;
+}
+.time-choice-value:empty {
+    display: none;
+}
+
+.time-choice-option:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+}
+
+.btn-time-choice {
+    padding: 6px 16px;
+    font-size: inherit;
+    font-family: inherit;
+    color: inherit;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+.btn-time-choice:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+    transform: scale(1.04);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.btn-time-choice:active {
+    transform: scale(0.98);
+}
+.btn-time-choice:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.time-choice-option input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.time-choice-radio {
+    position: relative;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #9ca3af;
+    border-radius: 50%;
+    background: #fff;
+    transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.time-choice-option input:checked + .time-choice-radio {
+    border-color: #000;
+    background: #000;
+    box-shadow: inset 0 0 0 3px #fff;
+}
+.time-choice-option input:checked + .time-choice-radio::after {
+    content: "✓";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+}
+
+.time-choice-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.commitment-time-warning {
+    font-size: 0.85rem;
+    color: #b45309;
+    margin: 10px 0 0 0;
+    text-align: center;
+}
+
+/* Seletor de horário: card abaixo dos options quando "Horário fixo diário" está selecionado */
+#routineTimeGroup .time-picker-wrapper {
+    width: 100%;
+    margin-top: 16px;
+}
+.time-picker-wrapper {
+    position: relative;
+}
+
+.time-picker-input-hidden {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.time-picker-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #374151;
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.time-picker-trigger:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+}
+
+.time-picker-trigger:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.15);
+}
+
+.time-picker-trigger .lucide,
+.time-picker-trigger svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: #6b7280;
+}
+
+.time-picker-trigger:hover .lucide,
+.time-picker-trigger:hover svg {
+    color: #111827;
+}
+
+.time-picker-value {
+    font-weight: 500;
+    min-width: 3ch;
+}
+
+.time-picker-value:empty::before {
+    content: '--:--';
+    color: #9ca3af;
+    font-weight: 400;
+}
+
+/* Card de horário fixo (abaixo dos cards, estilo da imagem) */
+.time-picker-card {
+    width: 100%;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px 20px;
+    box-sizing: border-box;
+}
+
+.time-picker-card-display {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000;
+    text-align: center;
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+}
+
+.time-picker-card-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.time-picker-card-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.time-picker-card-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+    letter-spacing: 0.04em;
+}
+
+.time-picker-card .time-picker-select {
+    min-width: 80px;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    color: #111;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.time-picker-card .time-picker-select:focus {
+    outline: none;
+    border-color: #000;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Legado: painel flutuante (não usado no step 4) */
+.time-picker-panel-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.time-picker-selects {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.time-picker-select {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 8px;
+    font-size: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    color: #111;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.time-picker-select:focus {
+    outline: none;
+    border-color: #000;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Checkbox "Sem horário fixo" profissional */
+.no-fixed-time-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #374151;
+    margin-bottom: 10px;
+    cursor: pointer;
+    padding: 10px 16px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.no-fixed-time-toggle:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+}
+
+.no-fixed-time-toggle input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.no-fixed-time-checkbox {
+    position: relative;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #9ca3af;
+    border-radius: 5px;
+    background: #ffffff;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.no-fixed-time-toggle input:focus-visible + .no-fixed-time-checkbox {
+    outline: 2px solid #000;
+    outline-offset: 2px;
+}
+
+.no-fixed-time-toggle input:checked + .no-fixed-time-checkbox {
+    background: #000000;
+    border-color: #000000;
+}
+
+.no-fixed-time-toggle input:checked + .no-fixed-time-checkbox::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid #ffffff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.no-fixed-time-label {
+    font-weight: 500;
+}
+
+.schedule-preview {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin: 20px 0 24px 0;
+    min-height: 1.5em;
+    text-align: center;
+    line-height: 1.55;
+    letter-spacing: 0.015em;
+    font-family: inherit;
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 100%;
+}
+
+.btn-cancel,
+.btn-create {
+    padding: 12px 20px;
+    min-width: 100px;
+    min-height: 44px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease, opacity 0.18s ease;
+    font-family: inherit;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.btn-create:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #e5e7eb;
+    color: #9ca3af;
+    border-color: #d1d5db;
+    box-shadow: none;
+}
+
+.btn-cancel {
+    background: #000000;
+    color: #ffffff;
+    border: 2px solid #000000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-cancel:hover {
+    transform: scale(1.04);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.btn-cancel:active {
+    transform: scale(0.98);
+}
+
+.btn-create {
+    background: #000000;
+    color: #ffffff;
+    border: 2px solid #000000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-create:hover:not(:disabled) {
+    transform: scale(1.04);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.btn-create:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+/* Tasks Preview */
+.tasks-preview {
+    background: #ffffff;
+    border: 2px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.tasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.task-preview-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: #f5f5f5;
+    border-radius: 6px;
+    gap: 10px;
+}
+
+.task-preview-text {
+    flex: 1;
+    font-size: 0.9rem;
+    color: #000000;
+    font-weight: 500;
+}
+
+.task-preview-remove:not(.uiverse-trash-btn) {
+    width: 24px;
+    height: 24px;
+    background: #ff4444;
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    flex-shrink: 0;
+}
+
+.task-preview-remove:not(.uiverse-trash-btn):hover {
+    background: #cc0000;
+    transform: scale(1.04);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.task-preview-remove:not(.uiverse-trash-btn):active {
+    transform: scale(0.98);
+}
+
+.task-preview-remove.uiverse-trash-btn--card {
+    align-self: center;
+}
+
+.add-task-container {
+    display: flex;
+    gap: 10px;
+}
+
+.task-input {
+    flex: 1;
+}
+
+.btn-add-task {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    color: #555;
+    font-size: 1.2rem;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+    flex-shrink: 0;
+}
+
+.btn-add-task:hover {
+    background: #e5e5e5;
+    border-color: #999;
+    color: #000;
+    transform: scale(1.04);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.btn-add-task:active {
+    transform: scale(0.98);
+}
+
+/* Step 4: Weekdays (semanal) */
+/* Step 4: título e subtítulo do horário */
+.step4-time-title {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+    text-align: center;
+    margin: 0 0 4px 0;
+}
+.step4-time-subtitle {
+    font-size: 0.85rem;
+    color: #374151;
+    text-align: center;
+    margin: 0 0 16px 0;
+    line-height: 1.4;
+}
+
+.create-step-4 #routineTimeGroup .time-choice-options--step4,
+.create-step-4 #step4WeekdaysGroup .daily-day-type-options {
+    width: 100%;
+    max-width: 240px;
+}
+
+#routineTimeGroup,
+#step4MonthlyGroup {
+    margin-bottom: 8px;
+}
+
+.step4-weekdays-group {
+    margin-top: 4px;
+}
+
+.weekdays-group-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+}
+
+.weekdays-group-hint {
+    font-size: 0.82rem;
+    color: #6b7280;
+    margin: 0 0 10px 0;
+}
+
+.weekdays-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.weekday-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 14px;
+    background: #f5f5f5;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.weekday-chip:hover {
+    background: #eee;
+    border-color: #ccc;
+    transform: scale(1.04);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.weekday-chip:active {
+    transform: scale(0.98);
+}
+
+.weekday-chip input { display: none; }
+
+.weekday-chip:has(input:checked) {
+    background: #000;
+    border-color: #000;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.weekday-chip:has(input:checked):hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.weekdays-hint-empty {
+    font-size: 0.85rem;
+    color: #b45309;
+    margin: 8px 0 0 0;
+}
+
+/* Step 4: Monthly — cards do mesmo tamanho que os de horário e centralizados */
+.monthly-type-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.monthly-type-option.time-choice-option--card {
+    width: 240px;
+    min-width: 240px;
+    max-width: 240px;
+    min-height: 120px;
+    box-sizing: border-box;
+    padding: 16px;
+    gap: 8px;
+}
+
+#step4MonthlyGroup .monthly-type-option {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+#step4MonthlyGroup .monthly-type-option .time-choice-label,
+#step4MonthlyGroup .monthly-type-option .time-choice-subtitle {
+    text-align: center;
+    width: 100%;
+}
+
+.monthly-type-option {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 16px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    transition: background 0.28s ease, border-color 0.28s ease, color 0.28s ease, opacity 0.28s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.monthly-type-option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.monthly-type-option:not(:has(input:checked)) {
+    opacity: 0.65;
+    background: #f3f4f6;
+    border-color: #e5e7eb;
+    color: #6b7280;
+}
+.monthly-type-option:not(:has(input:checked)):hover {
+    opacity: 0.9;
+    background: #e5e7eb;
+}
+.monthly-type-option:has(input:checked) {
+    opacity: 1;
+    background: #000;
+    border-color: #000;
+    color: #fff;
+    font-weight: 600;
+    position: relative;
+}
+.monthly-type-option:has(input:checked):hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+.monthly-type-option:has(input:checked) .time-choice-label,
+.monthly-type-option:has(input:checked) .time-choice-subtitle {
+    color: #fff;
+}
+#step4MonthlyGroup .monthly-type-option:has(input:checked) .time-choice-radio::after {
+    content: none;
+}
+.monthly-type-option input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.monthly-day-fixed,
+.monthly-week-pattern {
+    margin-top: 12px;
+}
+
+.monthly-week-pattern {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.monthly-pattern-card {
+    width: 100%;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-sizing: border-box;
+}
+
+.monthly-pattern-card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #000;
+    margin: 0 0 6px 0;
+}
+
+.monthly-pattern-card-hint {
+    font-size: 0.82rem;
+    color: #6b7280;
+    line-height: 1.4;
+    margin: 0 0 14px 0;
+}
+
+.monthly-pattern-card-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.monthly-pattern-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.monthly-pattern-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.monthly-pattern-select {
+    max-width: 180px;
+}
+
+.monthly-day-fixed {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.monthly-day-calendar {
+    max-width: 320px;
+    margin: 0;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #000;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.monthly-calendar-header {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111;
+    text-align: center;
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+}
+
+.monthly-calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 2px;
+    margin-bottom: 6px;
+}
+
+.monthly-calendar-weekday {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #000;
+    text-align: center;
+    padding: 2px 0;
+}
+
+.monthly-calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 2px;
+}
+
+.monthly-day-cell {
+    aspect-ratio: 1;
+    min-width: 0;
+    min-height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    background: #000;
+    border: 1px solid #000;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.monthly-day-cell:hover:not(.monthly-day-cell--empty) {
+    background: #222;
+    color: #fff;
+}
+
+.monthly-day-cell:focus-visible {
+    outline: 2px solid #22c55e;
+    outline-offset: 2px;
+}
+
+.monthly-day-cell--empty {
+    background: transparent;
+    cursor: default;
+}
+
+.monthly-day-cell.selected {
+    background: #fff;
+    color: #000;
+    border-color: #000;
+}
+
+.monthly-day-cell.selected:hover {
+    background: #f0f0f0;
+    color: #000;
+}
+
+.monthly-day-fixed {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.monthly-day-fixed-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #000;
+    margin: 0 0 4px 0;
+    text-align: center;
+}
+
+.monthly-day-fixed .form-input,
+.monthly-week-pattern .form-input {
+    width: auto;
+    min-width: 80px;
+}
+
+.monthly-day-fixed-suffix {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .create-section {
+        padding: 30px 20px;
+    }
+
+    .create-wizard {
+        padding-bottom: 56px;
+    }
+
+    .create-title {
+        font-size: 1.5rem;
+    }
+
+    .wizard-question {
+        font-size: 1.25rem;
+    }
+
+    .wizard-options {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .wizard-option {
+        min-width: 0;
+        max-width: none;
+    }
+
+    .wizard-progress {
+        left: 20px;
+        bottom: 12px;
+    }
+
+    .wizard-step-actions--with-back.form-actions {
+        flex-wrap: wrap;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+}
+
+/* Ajustes extras para celular (sem quebrar a estrutura) */
+@media (max-width: 480px) {
+    .create-section {
+        padding: 18px 12px;
+        border-radius: 20px;
+    }
+
+    .create-title {
+        font-size: 1.25rem;
+        margin-bottom: 16px;
+    }
+
+    .wizard-question {
+        font-size: 1.15rem;
+        margin-bottom: 20px;
+    }
+
+    .wizard-options {
+        gap: 14px;
+        margin-bottom: 20px;
+    }
+
+    .wizard-option {
+        padding: 14px 14px;
+        min-width: 0;
+        max-width: none;
+    }
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EC ROUTINE - Criar Rotina</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="create.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="auth-guard.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+        </div>
+        <div class="header-center">
+            <h1>EC ROUTINE</h1>
+        </div>
+        <div class="header-right">
+            <a href="/login" class="header-auth-link">Entrar</a>
+            <span class="username" id="username">USUÁRIO</span>
+            <div class="user-icon"></div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="create-section">
+            <h2 class="create-title">Criar Nova Rotina</h2>
+            
+            <form id="createForm" class="create-form">
+                <div class="form-group">
+                    <label for="routineTitle">Título da Rotina</label>
+                    <input 
+                        type="text" 
+                        id="routineTitle" 
+                        placeholder="Ex: Rotina Matinal, Treino, Estudos..."
+                        class="form-input"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="routineDescription">Descrição (Opcional)</label>
+                    <textarea 
+                        id="routineDescription" 
+                        placeholder="Descreva sua rotina..."
+                        class="form-textarea"
+                        rows="4"
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="routineDate">Data de Início</label>
+                    <input 
+                        type="date" 
+                        id="routineDate" 
+                        class="form-input"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="routineTime">Horário</label>
+                    <input 
+                        type="time" 
+                        id="routineTime" 
+                        class="form-input"
+                    >
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="window.location.href='dashboard.html'">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn-create">
+                        Criar Rotina
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="create.js"></script>
+</body>
+</html>

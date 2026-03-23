@@ -1,0 +1,216 @@
+/* From Uiverse.io by vinodjangid07 — botão de lixo animado (classe .uiverse-trash-btn) */
+
+.uiverse-trash-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+    cursor: pointer;
+    transition-duration: 0.3s;
+    overflow: hidden;
+    position: relative;
+    gap: 2px;
+    flex-shrink: 0;
+    font-family: inherit;
+    padding: 0;
+    color: #fff;
+}
+
+.uiverse-trash-btn .svgIcon {
+    width: 12px;
+    transition-duration: 0.3s;
+}
+
+.uiverse-trash-btn .svgIcon path {
+    fill: white;
+}
+
+.uiverse-trash-btn:hover {
+    transition-duration: 0.3s;
+    background-color: rgb(255, 69, 69);
+    align-items: center;
+    gap: 0;
+}
+
+.uiverse-trash-btn .bin-top {
+    transform-origin: bottom right;
+}
+
+.uiverse-trash-btn:hover .bin-top {
+    transition-duration: 0.5s;
+    transform: rotate(160deg);
+}
+
+/* Com texto (agenda, biblioteca, excluir rotina) */
+.uiverse-trash-btn--labeled {
+    width: auto;
+    min-width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    flex-direction: row;
+    padding: 0 18px 0 12px;
+    gap: 10px;
+}
+
+.uiverse-trash-btn--labeled:hover {
+    gap: 10px;
+}
+
+.uiverse-trash-btn__icons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.uiverse-trash-btn--labeled:hover .uiverse-trash-btn__icons {
+    gap: 0;
+}
+
+.uiverse-trash-btn__label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: #fff;
+}
+
+/* Cards / preview — moldura alinhada ao botão ✎ (cinza, quadrado arredondado) */
+.uiverse-trash-btn--card {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    border-radius: 4px;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    box-shadow: none;
+    color: #374151;
+}
+
+.uiverse-trash-btn--card .svgIcon {
+    width: 8px;
+}
+
+.uiverse-trash-btn--card .svgIcon path {
+    fill: #374151;
+}
+
+.uiverse-trash-btn--card:hover {
+    background: #e5e7eb;
+    border-color: #d1d5db;
+    gap: 2px;
+}
+
+.uiverse-trash-btn--card:hover .svgIcon path {
+    fill: #374151;
+}
+
+.uiverse-trash-btn--card.delete:hover {
+    background: #fee2e2;
+    border-color: #fecaca;
+}
+
+.uiverse-trash-btn--card.delete:hover .svgIcon path {
+    fill: #b91c1c;
+}
+
+/* Linha de tarefa — mesma moldura cinza, tamanho maior */
+.uiverse-trash-btn--task {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    border-radius: 6px;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    box-shadow: none;
+    color: #374151;
+}
+
+.uiverse-trash-btn--task .svgIcon {
+    width: 9px;
+}
+
+.uiverse-trash-btn--task .svgIcon path {
+    fill: #374151;
+}
+
+.uiverse-trash-btn--task:hover {
+    background: #e5e7eb;
+    border-color: #d1d5db;
+    gap: 2px;
+}
+
+.uiverse-trash-btn--task.delete:hover {
+    background: #fee2e2;
+    border-color: #fecaca;
+}
+
+.uiverse-trash-btn--task.delete:hover .svgIcon path {
+    fill: #b91c1c;
+}
+
+/* Cabeçalho “Excluir” ao lado de “Editar” — mesma moldura que .action-btn (routine-detail) */
+.uiverse-trash-btn--routine-header.uiverse-trash-btn--labeled {
+    width: auto;
+    min-width: auto;
+    height: auto;
+    min-height: 0;
+    border-radius: 8px;
+    padding: 10px 20px;
+    gap: 10px;
+    flex-direction: row;
+    align-items: center;
+    background: #eeeeee;
+    border: 2px solid #000000;
+    color: #000000;
+    box-shadow: none;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.uiverse-trash-btn--routine-header .uiverse-trash-btn__label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #000000;
+}
+
+.uiverse-trash-btn--routine-header .svgIcon path {
+    fill: #000000;
+}
+
+.uiverse-trash-btn--routine-header.uiverse-trash-btn--labeled:hover {
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
+    gap: 10px;
+    align-items: center;
+}
+
+.uiverse-trash-btn--routine-header.uiverse-trash-btn--labeled:hover .uiverse-trash-btn__label {
+    color: #ffffff;
+}
+
+.uiverse-trash-btn--routine-header.uiverse-trash-btn--labeled:hover .svgIcon path {
+    fill: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .uiverse-trash-btn:hover .bin-top {
+        transform: none;
+    }
+
+    .uiverse-trash-btn,
+    .uiverse-trash-btn .svgIcon {
+        transition-duration: 0.15s;
+    }
+}

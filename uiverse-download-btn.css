@@ -1,0 +1,190 @@
+/* From Uiverse.io by vinodjangid07 — botão baixar anexo */
+
+.uiverse-download-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgb(27, 27, 27);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition-duration: 0.3s;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.11);
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.uiverse-download-btn .svgIcon {
+    fill: rgb(214, 178, 255);
+    width: 1em;
+    height: 1em;
+}
+
+.uiverse-download-btn .icon2 {
+    width: 14px;
+    height: 4px;
+    border-bottom: 2px solid rgb(182, 143, 255);
+    border-left: 2px solid rgb(182, 143, 255);
+    border-right: 2px solid rgb(182, 143, 255);
+}
+
+.uiverse-download-btn .tooltip {
+    position: absolute;
+    right: -95px;
+    opacity: 0;
+    background-color: rgb(12, 12, 12);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition-duration: 0.2s;
+    pointer-events: none;
+    letter-spacing: 0.5px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    z-index: 5;
+}
+
+.uiverse-download-btn .tooltip::before {
+    position: absolute;
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: rgb(12, 12, 12);
+    transform: rotate(45deg);
+    left: -5%;
+    transition-duration: 0.3s;
+}
+
+.uiverse-download-btn:hover .tooltip {
+    opacity: 1;
+    transition-duration: 0.3s;
+}
+
+.uiverse-download-btn:hover {
+    background-color: rgb(150, 94, 255);
+    transition-duration: 0.3s;
+}
+
+.uiverse-download-btn:hover .icon2 {
+    border-bottom-color: rgb(235, 235, 235);
+    border-left-color: rgb(235, 235, 235);
+    border-right-color: rgb(235, 235, 235);
+}
+
+.uiverse-download-btn:hover .svgIcon {
+    fill: rgb(255, 255, 255);
+    animation: uiverse-download-slide-in-top 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes uiverse-download-slide-in-top {
+    0% {
+        transform: translateY(-8px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Menu PNG / SVG */
+.annotation-attachment-download-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.annotation-download-flyout {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 6px;
+    background: #1a1a1a;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    min-width: 88px;
+}
+
+.annotation-download-flyout[hidden] {
+    display: none !important;
+}
+
+.annotation-download-format {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: #2d2d2d;
+    color: #e8d5ff;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.annotation-download-format:hover {
+    background: rgb(150, 94, 255);
+    color: #fff;
+}
+
+.agenda-annotation-folder-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.agenda-folder-bar .agenda-open-annotation {
+    flex: 1;
+    min-width: 0;
+}
+
+.biblioteca-item-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.biblioteca-folder-bar .biblioteca-item-open {
+    flex: 1;
+    min-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .uiverse-download-btn:hover .svgIcon {
+        animation: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .uiverse-download-btn .tooltip {
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        top: calc(100% + 8px);
+    }
+
+    .uiverse-download-btn .tooltip::before {
+        left: 50%;
+        top: -4px;
+        margin-left: -5px;
+    }
+}

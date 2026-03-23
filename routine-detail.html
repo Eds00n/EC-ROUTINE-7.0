@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EC ROUTINE - Detalhes da Rotina</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="routine-detail.css">
+    <link rel="stylesheet" href="uiverse-trash-bin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="auth-guard.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <button class="back-btn" onclick="window.location.href='dashboard.html'">
+                ← Voltar
+            </button>
+        </div>
+        <div class="header-center">
+            <h1>EC ROUTINE</h1>
+        </div>
+        <div class="header-right">
+            <span class="username" id="username">USUÁRIO</span>
+            <div class="user-icon"></div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="routine-detail-container" id="routineDetailContainer">
+            <div class="routine-header">
+                <h2 class="routine-title"><span class="routine-icon" id="routineIcon"></span><span id="routineTitle">Carregando...</span></h2>
+                <div class="routine-actions">
+                    <button class="action-btn edit-btn" id="editBtn">Editar</button>
+                    <button class="action-btn delete-btn" id="deleteBtn">Excluir</button>
+                </div>
+            </div>
+
+            <div class="routine-description" id="routineDescription"></div>
+
+            <div class="routine-meta">
+                <div class="meta-item">
+                    <span class="meta-label">Data:</span>
+                    <span class="meta-value" id="routineDate">-</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Horário:</span>
+                    <span class="meta-value" id="routineTime">-</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Planejamento:</span>
+                    <span class="meta-value routine-plan-type" id="routinePlanType">-</span>
+                </div>
+            </div>
+
+            <div class="routine-complete-block" id="routineCompleteBlock" style="display: none;">
+                <p class="routine-complete-question">TAREFA COMPLETA?</p>
+                <div class="routine-complete-actions">
+                    <button type="button" class="btn-task-complete-detail" id="btnTaskCompleteDetail" title="Sim, tarefa completa">✓</button>
+                    <button type="button" class="btn-task-incomplete-detail" id="btnTaskIncompleteDetail" title="Não, tarefa incompleta">✗</button>
+                </div>
+            </div>
+
+            <section class="detail-section routine-objectives-section" id="routineObjectivesSection" style="display: none;">
+                <h3>Objetivos</h3>
+                <p class="routine-objectives-text" id="routineObjectives"></p>
+            </section>
+
+            <section class="detail-section routine-reasons-section" id="routineReasonsSection" style="display: none;">
+                <h3>Por que estou fazendo</h3>
+                <p class="routine-reasons-text" id="routineReasons"></p>
+            </section>
+
+            <div class="progress-section">
+                <div class="progress-header">
+                    <h3>Progresso</h3>
+                    <span class="progress-percent" id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar-large">
+                    <div class="progress-fill-large" id="progressFill"></div>
+                </div>
+            </div>
+
+            <section id="routineStudySection" class="routine-study-section" hidden aria-label="Estudo"></section>
+
+            <div class="tasks-section">
+                <div class="tasks-header">
+                    <h3>Tarefas</h3>
+                    <button class="add-task-btn" id="addTaskBtn">+ Adicionar Tarefa</button>
+                </div>
+                <div class="task-list" id="taskList">
+                    <!-- Tarefas serão inseridas aqui via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="save-toast" id="saveToast" aria-live="polite">
+        <span class="save-toast-icon">✓</span>
+        <span class="save-toast-text">Dados salvos com sucesso!</span>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="trash-bin-button.js"></script>
+    <script src="routine-detail.js"></script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EC ROUTINE - Dashboard</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%231a1a2e' rx='4'/><text x='16' y='22' font-family='sans-serif' font-size='14' fill='%23eee' text-anchor='middle'>EC</text></svg>" type="image/svg+xml">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="uiverse-trash-bin.css">
+    <link rel="stylesheet" href="uiverse-download-btn.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="auth-guard.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <div class="menu-icon"></div>
+            <div class="menu-icon"></div>
+        </div>
+        <div class="header-center">
+            <h1>EC ROUTINE</h1>
+        </div>
+        <div class="header-right">
+            <a href="/login" class="header-auth-link">Entrar</a>
+            <span class="username" id="username">NOME DO USUARIO</span>
+            <div class="user-icon"></div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Dashboard: Hoje, resposta rápida -->
+        <div id="dashboardOverview" class="dashboard-overview">
+            <div class="dashboard-overview-bar" aria-label="Título do dashboard">
+                <h1 class="dashboard-hero-title">Dashboard</h1>
+            </div>
+
+            <div id="dashboardDaySummary" class="dashboard-day-summary" aria-live="polite"></div>
+
+            <div class="dashboard-two-col" aria-label="Produtividade e próximas">
+                <section class="dashboard-card dashboard-card--frequency" id="dashboardFrequency" aria-label="Produtividade">
+                    <h2 class="dashboard-card-label">GRAFICO DE PRODUTIVIDADE</h2>
+                    <div class="dashboard-frequency-content" id="dashboardFrequencyContent"></div>
+                </section>
+                <section class="dashboard-card dashboard-card--next" id="dashboardNextDays" aria-label="Próximas">
+                    <h2 class="dashboard-card-label"><span class="dashboard-card-icon dashboard-card-icon--next" aria-hidden="true"></span>Próximas</h2>
+                    <p class="dashboard-card-desc">Rotinas de hoje com horário e próximos dias.</p>
+                    <div class="dashboard-next-content" id="dashboardNextContent"></div>
+                </section>
+            </div>
+
+            <section class="dashboard-card dashboard-card--main" id="dashboardTodayCard" aria-label="Rotina de hoje">
+                <div class="dashboard-today-content" id="dashboardTodayContent"></div>
+            </section>
+
+            <section class="dashboard-card dashboard-card--progress" id="dashboardProgress" aria-label="Progresso do dia">
+                <h2 class="dashboard-card-label"><span class="dashboard-card-icon dashboard-card-icon--progress" aria-hidden="true"></span>Progresso do dia</h2>
+                <p class="dashboard-card-desc">Rotinas de hoje concluídas em relação ao total agendado.</p>
+                <div class="dashboard-progress-content" id="dashboardProgressContent"></div>
+            </section>
+
+            <section class="dashboard-card dashboard-card--stats-charts" id="dashboardStatsCharts" aria-label="Gráficos estatísticos">
+                <h2 class="dashboard-card-label">Gráficos estatísticos</h2>
+                <p class="dashboard-card-desc">Evolução semanal e taxa de conclusão do dia.</p>
+                <div class="dashboard-stats-charts-grid">
+                    <div class="dashboard-stat-chart-box" id="dashboardCircleToday">
+                        <h3 class="dashboard-stat-chart-box-title">Taxa hoje</h3>
+                        <div class="dashboard-stat-chart-box-content" id="dashboardCircleTodayContent"></div>
+                    </div>
+                    <div class="dashboard-stat-chart-box dashboard-stat-chart-box--pending" id="dashboardPendingTasks">
+                        <div class="dashboard-pending-tasks-content" id="dashboardPendingTasksContent"></div>
+                    </div>
+                    <div class="dashboard-stat-chart-box" id="dashboardBarWeek">
+                        <h3 class="dashboard-stat-chart-box-title">Últimos 7 dias</h3>
+                        <div class="dashboard-stat-chart-box-content" id="dashboardBarWeekContent"></div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="dashboard-overview-actions">
+                <p class="dashboard-ver-cards-kicker"><span class="dashboard-ver-cards-kicker-inner">EC ROUTINE</span></p>
+                <button type="button" class="btn-ver-todas btn-ver-cards btn-ver-cards--neutral" id="btnVerRotinas" aria-label="Ver rotinas em cards">
+                    <i data-lucide="layout-grid" class="btn-ver-cards-icon" aria-hidden="true"></i>
+                    <span class="btn-ver-cards-label">Ver cards</span>
+                    <i data-lucide="chevron-right" class="btn-ver-cards-chevron" aria-hidden="true"></i>
+                </button>
+            </div>
+            <p id="dashboardLastUpdate" class="dashboard-last-update" aria-live="polite"></p>
+        </div>
+
+        <!-- Tela de Cards/Calendário/Agenda (oculta por padrão) -->
+        <div id="rotinasView" class="rotinas-view hidden">
+            <div class="dashboard-header">
+                <div class="dashboard-controls">
+                    <div class="view-toggle">
+                        <button type="button" class="view-btn" data-view="dashboard" id="btnVoltarDashboard" onclick="window.showDashboardOverview && window.showDashboardOverview(); return false;">Dashboard</button>
+                        <button type="button" class="view-btn active" data-view="cards" id="cardsViewBtn" onclick="window.switchRotinasView && window.switchRotinasView('cards'); return false;">Cards</button>
+                        <button type="button" class="view-btn" data-view="calendar" id="calendarViewBtn" onclick="window.switchRotinasView && window.switchRotinasView('calendar'); return false;">Calendário</button>
+                        <button type="button" class="view-btn" data-view="agenda" id="agendaViewBtn" onclick="window.switchRotinasView && window.switchRotinasView('agenda'); return false;">Agenda</button>
+                        <button type="button" class="view-btn" data-view="biblioteca" id="bibliotecaViewBtn" onclick="window.switchRotinasView && window.switchRotinasView('biblioteca'); return false;">Biblioteca de Agendamentos</button>
+                        <div class="filters">
+                            <button type="button" class="filter-btn active" data-filter="all">Todas</button>
+                            <button type="button" class="filter-btn" data-filter="sequences">Sequências</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="routines-container" id="routinesContainer">
+                <div class="dashboard-layout">
+                    <div class="routines-column">
+                        <div class="routines-list" id="routinesGrid">
+                            <!-- Cards de rotinas serão inseridos aqui via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                <div class="calendar-view hidden" id="calendarView">
+                    <!-- Visualização de calendário será inserida aqui -->
+                </div>
+                <div class="agenda-view hidden" id="agendaView">
+                    <!-- Visualização de agenda será inserida aqui -->
+                </div>
+                <div class="biblioteca-view hidden" id="bibliotecaView">
+                    <!-- Biblioteca de agendamentos passados -->
+                </div>
+            </div>
+
+            <div class="empty-state" id="emptyState">
+                <h2 class="empty-title">Nenhuma rotina criada ainda</h2>
+                <p class="empty-text">Comece criando sua primeira rotina!</p>
+                <button class="add-btn-large" id="addBtnLarge" onclick="window.location.href='create.html'">
+                    <span class="plus-icon">+</span>
+                    <span>Criar Rotina</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Container de Notificações -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- Tela de Apresentação (1x por dia) -->
+    <div id="dailyOnboardingOverlay" class="daily-onboarding-overlay" aria-hidden="true">
+        <div class="daily-onboarding-card" role="dialog" aria-label="Apresentação do app">
+            <div class="daily-onboarding-steps">
+                <div class="daily-onboarding-step daily-onboarding-step--1 is-active" data-step="1">
+                    <h1 class="daily-onboarding-main-title">EC ROUTINE</h1>
+                </div>
+                <div class="daily-onboarding-step daily-onboarding-step--2" data-step="2">
+                    <h2 class="daily-onboarding-step2-heading">Tarefas de hoje</h2>
+                    <p class="daily-onboarding-step2-desc">Importantes primeiro; depois pendentes e em andamento.</p>
+                    <div id="dailyOnboardingTasksList" class="daily-onboarding-tasks-list" aria-live="polite"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Boas-vindas pós-login (só se não houver rotinas) — mesmo visual da apresentação diária -->
+    <div id="postLoginWelcomeOverlay" class="daily-onboarding-overlay" aria-hidden="true">
+        <div class="daily-onboarding-card" role="dialog" aria-label="Boas-vindas">
+            <div class="daily-onboarding-steps">
+                <div class="daily-onboarding-step daily-onboarding-step--1 is-active" data-step="1">
+                    <h1 class="daily-onboarding-main-title">EC ROUTINE</h1>
+                </div>
+                <div class="daily-onboarding-step daily-onboarding-step--2" data-step="2">
+                    <h2 class="daily-onboarding-step2-heading">Seja bem-vindo</h2>
+                    <p class="daily-onboarding-step2-desc">Vamos criar sua primeira tarefa?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Anotação (tipo + editor) -->
+    <div class="annotation-modal hidden" id="annotationModal" aria-hidden="true">
+        <div class="annotation-modal-overlay"></div>
+        <div class="annotation-saving-overlay" id="annotationSavingOverlay" aria-hidden="true" role="dialog" aria-label="A guardar">
+            <div class="annotation-saving-card" role="status" aria-live="polite">
+                <div class="annotation-saving-spinner" aria-hidden="true"></div>
+                <div class="annotation-saving-text" id="annotationSavingText">A guardar…</div>
+            </div>
+        </div>
+        <div class="annotation-modal-content">
+            <div class="annotation-modal-step annotation-modal-preview" id="annotationPreviewStep">
+                <h3 class="annotation-modal-title" id="annotationPreviewTitle">Escolha como anotar</h3>
+                <p class="annotation-preview-desc">Selecione um tipo de anotação para esta tarefa no dia indicado.</p>
+                <div class="annotation-preview-cards">
+                    <button type="button" class="annotation-preview-card" data-type="caderno" aria-label="Caderno Digital - Folha com pauta para desenho e escrita à mão">
+                        <div class="papper" aria-hidden="true"></div>
+                        <span class="annotation-preview-label">Caderno Digital</span>
+                        <span class="annotation-preview-hint">Folha com pauta para desenho e escrita à mão.</span>
+                    </button>
+                    <button type="button" class="annotation-preview-card" data-type="digitalizando" aria-label="Digitalizando - Destacar e sublinhar texto da tarefa">
+                        <div class="annotation-preview-digitalizando" aria-hidden="true">
+                            <span class="preview-line"><mark class="preview-highlight">texto destacado</mark></span>
+                            <span class="preview-line preview-underline">sublinhado</span>
+                        </div>
+                        <span class="annotation-preview-label">Digitalizando</span>
+                        <span class="annotation-preview-hint">Destacar e sublinhar texto da tarefa.</span>
+                    </button>
+                    <button type="button" class="annotation-preview-card" data-type="mental" aria-label="Diagrama - Nós e ramos como anexos flutuantes que você pode arrastar">
+                        <img class="annotation-preview-mental-example" src="assets/diagram-example.png" aria-hidden="true" alt="" />
+                        <span class="annotation-preview-label">Diagrama</span>
+                        <span class="annotation-preview-hint">Nós e ramos como anexos flutuantes que você pode arrastar.</span>
+                    </button>
+                </div>
+            </div>
+            <div class="annotation-modal-step annotation-modal-editor hidden" id="annotationEditorStep">
+                <div class="annotation-modal-title-wrap" id="annotationEditorTitleWrap">
+                    <h3 class="annotation-modal-title" id="annotationEditorTitle">Editor</h3>
+                </div>
+                <div id="annotationEditorDigitalizing" class="annotation-editor-panel hidden">
+                    <div class="annotation-digital-toolbar">
+                        <button type="button" class="annotation-tool-btn" data-cmd="highlight" title="Destaque">Destaque</button>
+                        <button type="button" class="annotation-tool-btn" data-cmd="underline" title="Sublinhado">Sublinhado</button>
+                    </div>
+                    <div class="annotation-digital-content" id="annotationDigitalContent" contenteditable="true"></div>
+                </div>
+                <div id="annotationEditorCaderno" class="annotation-editor-panel hidden">
+                    <div class="annotation-caderno-toolbar">
+                        <button type="button" class="annotation-caderno-tool pen active" data-tool="pen" title="Caneta">Caneta</button>
+                        <button type="button" class="annotation-caderno-tool" data-tool="eraser" title="Borracha">Borracha</button>
+                        <span class="annotation-caderno-label">Espessura:</span>
+                        <button type="button" class="annotation-caderno-width" data-width="1" title="Fino">Fino</button>
+                        <button type="button" class="annotation-caderno-width active" data-width="3" title="Médio">Médio</button>
+                        <button type="button" class="annotation-caderno-width" data-width="6" title="Grosso">Grosso</button>
+                        <input type="color" class="annotation-caderno-color" id="annotationCadernoColor" value="#000000" title="Cor">
+                    </div>
+                    <div class="annotation-caderno-bg annotation-caderno-bg--white">
+                        <canvas id="annotationCadernoCanvas" class="annotation-caderno-canvas"></canvas>
+                    </div>
+                </div>
+                <div id="annotationEditorMental" class="annotation-editor-panel hidden">
+                    <div class="annotation-mental-toolbar">
+                        <button type="button" class="annotation-mental-add-branch" id="annotationMentalAddBranch" title="Adicionar nó" aria-label="Adicionar nó">+</button>
+                        <button type="button" class="annotation-mental-add-balloon" id="annotationMentalAddBalloon" title="Balão de texto" aria-label="Balão de texto">T</button>
+                        <button type="button" class="annotation-mental-export-svg" id="annotationMentalExportSvg" title="Exportar diagrama completo como SVG (ligações e imagens)" aria-label="Exportar SVG">SVG</button>
+                        <div class="annotation-mental-connection-tip hidden" id="annotationMentalConnectionTip">Clique em outro nó para conectar.</div>
+                        <div class="annotation-mental-add-preview hidden" id="annotationMentalAddPreview">
+                            <label for="annotationMentalAddPreviewInput" class="annotation-mental-preview-label">O que será este anexo?</label>
+                            <input type="text" id="annotationMentalAddPreviewInput" class="annotation-mental-preview-input" placeholder="Ex.: ideia, tarefa, estudo..." maxlength="200">
+                            <button type="button" class="annotation-mental-preview-confirm" id="annotationMentalPreviewConfirm">Adicionar ao plano</button>
+                            <button type="button" class="annotation-mental-preview-cancel" id="annotationMentalPreviewCancel">Cancelar</button>
+                        </div>
+                    </div>
+                    <div class="annotation-mental-text-config-toolbar hidden" id="annotationMentalTextConfigToolbar" role="toolbar" aria-label="Configuração de texto">
+                        <button type="button" class="annotation-mental-text-config-btn" data-cmd="italic" title="Itálico">I</button>
+                        <button type="button" class="annotation-mental-text-config-btn" data-cmd="underline" title="Sublinhado">U</button>
+                        <button type="button" class="annotation-mental-text-config-btn" data-cmd="strikeThrough" title="Tachado">S</button>
+                        <button type="button" class="annotation-mental-text-config-btn" data-cmd="removeFormat" title="Remover formatação">aA</button>
+                        <button type="button" class="annotation-mental-text-config-btn" data-cmd="justifyCenter" title="Centralizar">≡</button>
+                        <button type="button" class="annotation-mental-text-config-btn" data-cmd="insertUnorderedList" title="Lista">≡·</button>
+                        <button type="button" class="annotation-mental-text-config-btn annotation-mental-text-config-spacing" data-cmd="formatBlock" data-value="p" title="Espaçamento/parágrafo">T↔</button>
+                    </div>
+                    <div class="annotation-mental-text-spacing-panel hidden" id="annotationMentalTextSpacingPanel" role="group" aria-label="Espaçamento do texto">
+                        <div class="annotation-mental-text-spacing-header">
+                            <span class="annotation-mental-text-spacing-title">Espaçamento</span>
+                            <span class="annotation-mental-text-spacing-value" id="annotationMentalTextSpacingValue">50%</span>
+                        </div>
+                        <input type="range" id="annotationMentalTextSpacingRange" min="0" max="100" value="50" step="1" aria-label="Espaçamento (0 a 100)"/>
+                    </div>
+                    <div class="annotation-mental-canvas annotation-mental-canvas--draggable annotation-mental-canvas--pattern" id="annotationMentalCanvas">
+                        <div class="annotation-mental-pan-layer" id="annotationMentalPanLayer" title="Arraste para mover a vista" aria-label="Área para arrastar e mover a vista"></div>
+                        <div class="annotation-mental-zoom-wrap" id="annotationMentalZoomWrap">
+                            <div class="annotation-mental-center" id="annotationMentalCenter"></div>
+                            <div class="annotation-mental-branches" id="annotationMentalBranches"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="annotation-modal-actions">
+                    <div class="annotation-modal-actions-meta" id="annotationModalActionsMeta" aria-hidden="true">
+                        <div class="annotation-modal-download-only-wrap" id="annotationModalDownloadSlot"></div>
+                    </div>
+                    <div class="annotation-modal-actions-buttons">
+                        <button type="button" class="annotation-btn-cancel" id="annotationBtnCancel">Cancelar</button>
+                        <button type="button" class="annotation-btn-save" id="annotationBtnSave">Salvar</button>
+                        <button type="button" class="annotation-btn-close-view" id="annotationBtnCloseView" style="display: none;">Fechar</button>
+                        <button type="button" class="annotation-btn-view-edit" id="annotationBtnViewEdit" style="display: none;" title="Editar" aria-label="Editar"><span class="annotation-view-pencil-icon" aria-hidden="true">✏️</span></button>
+                        <button type="button" class="annotation-btn-save-changes" id="annotationBtnSaveChanges" style="display: none;">Salvar alterações</button>
+                    </div>
+                </div>
+                <div class="annotation-viewer-nav hidden" id="annotationViewerNav" style="display: none;" aria-label="Navegar anotações"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Mês Ampliado -->
+    <div class="day-info-modal" id="dayInfoModal">
+        <div class="day-info-overlay"></div>
+        <div class="day-info-content">
+            <button class="day-info-close" id="dayInfoClose">×</button>
+            <h3 class="day-info-date" id="dayInfoDate">MES ANO</h3>
+            <div class="month-amplified-grid" id="monthAmplifiedGrid">
+                <!-- Grade do mês será inserida via JS -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="trash-bin-button.js"></script>
+    <script src="mental-diagram-svg-export.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

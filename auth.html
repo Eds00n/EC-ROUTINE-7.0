@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EC ROUTINE — Entrar</title>
+    <link rel="stylesheet" href="auth.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="auth-page">
+    <div class="auth-main">
+    <div class="auth-bg" aria-hidden="true">
+        <div class="auth-bg__img"></div>
+        <div class="auth-bg__overlay"></div>
+    </div>
+
+    <div class="auth-content">
+    <div class="auth-shell">
+        <aside class="auth-hero">
+            <div class="auth-brand">
+                <div class="auth-brand-row">
+                    <p class="auth-logo">EC ROUTINE</p>
+                </div>
+            </div>
+            <h1 class="auth-hero-title" id="authHeroTitle">Entre na sua conta</h1>
+            <p class="auth-hero-text" id="authHeroText">
+                Organize rotinas, acompanhe o progresso e mantenha o foco no que importa.
+            </p>
+        </aside>
+
+        <div class="auth-card-column">
+            <div class="auth-card">
+                <div class="auth-card-inner">
+                    <!-- Login -->
+                    <section id="loginPanel" class="auth-panel" aria-labelledby="loginTitle">
+                        <h2 id="loginTitle" class="auth-card-title">Entrar</h2>
+                        <form id="loginForm" class="auth-form" novalidate>
+                            <div class="auth-field-wrap">
+                                <label class="auth-label visually-hidden" for="loginEmail">E-mail</label>
+                                <div class="auth-field">
+                                    <span class="auth-field-icon" aria-hidden="true"><i data-lucide="mail"></i></span>
+                                    <input type="email" id="loginEmail" name="email" class="auth-input" placeholder="E-mail" autocomplete="email" required>
+                                </div>
+                                <span class="auth-field-error" id="loginEmailError" role="alert"></span>
+                            </div>
+                            <div class="auth-field-wrap">
+                                <label class="auth-label visually-hidden" for="loginPassword">Senha</label>
+                                <div class="auth-field">
+                                    <span class="auth-field-icon" aria-hidden="true"><i data-lucide="lock"></i></span>
+                                    <input type="password" id="loginPassword" name="password" class="auth-input auth-input--with-toggle" placeholder="Senha" autocomplete="current-password" required>
+                                    <button type="button" class="auth-toggle-password" data-target="loginPassword" aria-label="Mostrar senha">
+                                        <i data-lucide="eye"></i>
+                                    </button>
+                                </div>
+                                <span class="auth-field-error" id="loginPasswordError" role="alert"></span>
+                            </div>
+                            <p class="auth-form-error" id="loginFormError" role="alert"></p>
+                            <button type="submit" class="auth-btn auth-btn--login auth-btn--login-pro" id="loginSubmit">
+                                <span class="auth-btn-login-inner">
+                                    <span class="auth-btn-text">Entrar</span>
+                                    <span class="auth-btn-login-chevron" aria-hidden="true">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </span>
+                                </span>
+                                <span class="auth-btn-loading" aria-hidden="true">Entrando…</span>
+                            </button>
+                        </form>
+                        <div class="auth-footer">
+                            <span class="auth-footer-line" aria-hidden="true"></span>
+                            <p class="auth-footer-text">Não tem conta? <button type="button" class="auth-link" id="goRegister">Criar conta</button></p>
+                            <span class="auth-footer-line" aria-hidden="true"></span>
+                        </div>
+                    </section>
+
+                    <!-- Cadastro -->
+                    <section id="registerPanel" class="auth-panel auth-panel--hidden" aria-labelledby="registerTitle" aria-hidden="true">
+                        <h2 id="registerTitle" class="auth-card-title">Cadastro</h2>
+                        <form id="registerForm" class="auth-form" novalidate>
+                            <div class="auth-field-wrap">
+                                <label class="auth-label visually-hidden" for="regName">Nome completo</label>
+                                <div class="auth-field">
+                                    <span class="auth-field-icon" aria-hidden="true"><i data-lucide="user"></i></span>
+                                    <input type="text" id="regName" name="name" class="auth-input" placeholder="Nome completo" autocomplete="name" required>
+                                </div>
+                                <span class="auth-field-error" id="regNameError" role="alert"></span>
+                            </div>
+                            <div class="auth-field-wrap">
+                                <label class="auth-label visually-hidden" for="regEmail">E-mail</label>
+                                <div class="auth-field">
+                                    <span class="auth-field-icon" aria-hidden="true"><i data-lucide="mail"></i></span>
+                                    <input type="email" id="regEmail" name="email" class="auth-input" placeholder="E-mail" autocomplete="email" required>
+                                </div>
+                                <span class="auth-field-error" id="regEmailError" role="alert"></span>
+                            </div>
+                            <div class="auth-field-wrap">
+                                <label class="auth-label visually-hidden" for="regPassword">Senha</label>
+                                <div class="auth-field">
+                                    <span class="auth-field-icon" aria-hidden="true"><i data-lucide="lock"></i></span>
+                                    <input type="password" id="regPassword" name="password" class="auth-input auth-input--with-toggle" placeholder="Senha" autocomplete="new-password" required minlength="8">
+                                    <button type="button" class="auth-toggle-password" data-target="regPassword" aria-label="Mostrar senha">
+                                        <i data-lucide="eye"></i>
+                                    </button>
+                                </div>
+                                <span class="auth-field-error" id="regPasswordError" role="alert"></span>
+                            </div>
+                            <div class="auth-field-wrap">
+                                <label class="auth-label visually-hidden" for="regPasswordConfirm">Confirmar senha</label>
+                                <div class="auth-field">
+                                    <span class="auth-field-icon" aria-hidden="true"><i data-lucide="lock"></i></span>
+                                    <input type="password" id="regPasswordConfirm" name="passwordConfirm" class="auth-input auth-input--with-toggle" placeholder="Confirmar senha" autocomplete="new-password" required>
+                                    <button type="button" class="auth-toggle-password" data-target="regPasswordConfirm" aria-label="Mostrar senha">
+                                        <i data-lucide="eye"></i>
+                                    </button>
+                                </div>
+                                <span class="auth-field-error" id="regPasswordConfirmError" role="alert"></span>
+                            </div>
+                            <label class="auth-check">
+                                <input type="checkbox" id="regTerms" name="terms" required>
+                                <span>Eu concordo com os <a href="#" class="auth-terms-link" onclick="return false;"><strong>Termos &amp; Condições</strong></a>.</span>
+                            </label>
+                            <span class="auth-field-error" id="regTermsError" role="alert"></span>
+                            <p class="auth-form-error" id="registerFormError" role="alert"></p>
+                            <button type="submit" class="auth-btn auth-btn--register" id="registerSubmit">
+                                <span class="auth-btn-text">Cadastrar</span>
+                                <span class="auth-btn-loading" aria-hidden="true">Cadastrando…</span>
+                            </button>
+                        </form>
+                        <div class="auth-footer">
+                            <span class="auth-footer-line" aria-hidden="true"></span>
+                            <p class="auth-footer-text">Já tem uma conta? <button type="button" class="auth-link" id="goLogin">Entrar</button></p>
+                            <span class="auth-footer-line" aria-hidden="true"></span>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EC ROUTINE - Criar Rotina</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="create.css">
+    <link rel="stylesheet" href="uiverse-trash-bin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="auth-guard.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <button class="back-btn" onclick="window.location.href='dashboard.html'">
+                ← Voltar
+            </button>
+        </div>
+        <div class="header-center">
+            <h1>EC ROUTINE</h1>
+        </div>
+        <div class="header-right">
+            <a href="/login" class="header-auth-link">Entrar</a>
+            <span class="username" id="username">USUÁRIO</span>
+            <div class="user-icon"></div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="create-section create-wizard">
+            <form id="createForm" class="create-form" onsubmit="return false;">
+                <!-- Passo 1: Tipo da tarefa -->
+                <div class="create-step create-step-1" data-step="1" id="wizardStep1">
+            <h2 class="create-title">Criar Nova Rotina</h2>
+                    <p class="wizard-question">Essa tarefa é?</p>
+                    <div class="wizard-options" id="planTypeOptions">
+                        <label class="wizard-option">
+                            <input type="radio" name="planType" value="daily">
+                            <span class="wizard-option-radio"></span>
+                            <span class="wizard-option-content">
+                                <span class="wizard-option-label">Diariamente</span>
+                                <span class="wizard-option-example">Ex: beber água, estudar, treinar</span>
+                            </span>
+                        </label>
+                        <label class="wizard-option">
+                            <input type="radio" name="planType" value="weekly">
+                            <span class="wizard-option-radio"></span>
+                            <span class="wizard-option-content">
+                                <span class="wizard-option-label">Semanal</span>
+                                <span class="wizard-option-example">pagar fatura, organizar finanças, revisar metas</span>
+                            </span>
+                        </label>
+                        <label class="wizard-option">
+                            <input type="radio" name="planType" value="monthly">
+                            <span class="wizard-option-radio"></span>
+                            <span class="wizard-option-content">
+                                <span class="wizard-option-label">Mensalmente</span>
+                                <span class="wizard-option-example">lavar o carro, revisar estudos</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="wizard-step-actions">
+                        <button type="button" class="btn-continuar" id="btnContinuarStep1" disabled onclick="window.goToNextStep && window.goToNextStep(1); return false;">Continuar</button>
+                    </div>
+                </div>
+
+                <!-- Passo 2: Sobre a tarefa, Nome, Bullet journal, Categoria, Descrição -->
+                <div class="create-step create-step-2" data-step="2" id="wizardStep2" style="display: none;">
+                    <h2 class="create-title">Criar Nova Rotina</h2>
+                    <h3 class="wizard-step-heading">Sobre a tarefa</h3>
+                    <div class="form-group form-group-task-name">
+                        <label for="routineTitle" class="task-name-label">Nome da tarefa:</label>
+                        <input type="text" id="routineTitle" placeholder="Ex: Rotina Matinal, Treino, Estudos..." class="form-input form-input-task-name">
+                    </div>
+                    <div class="bullet-journal-section">
+                        <p class="bullet-journal-labels bullet-journal-label--above">Nível de importância</p>
+                        <div class="bullet-journal-options" id="bulletTypeOptions">
+                            <label class="bullet-option">
+                                <input type="radio" name="bulletType" value="reminder">
+                                <span class="bullet-option-box">
+                                    <span class="bullet-symbol bullet-symbol--reminder" aria-hidden="true"></span>
+                                    <span class="bullet-option-label">Lembretes</span>
+                                </span>
+                            </label>
+                            <label class="bullet-option">
+                                <input type="radio" name="bulletType" value="task">
+                                <span class="bullet-option-box">
+                                    <span class="bullet-symbol bullet-symbol--task" aria-hidden="true"></span>
+                                    <span class="bullet-option-label">Tarefas</span>
+                                </span>
+                            </label>
+                            <label class="bullet-option">
+                                <input type="radio" name="bulletType" value="commitment">
+                                <span class="bullet-option-box">
+                                    <span class="bullet-symbol bullet-symbol--commitment" aria-hidden="true"></span>
+                                    <span class="bullet-option-label">Compromissos</span>
+                                </span>
+                            </label>
+                            <label class="bullet-option">
+                                <input type="radio" name="bulletType" value="important">
+                                <span class="bullet-option-box">
+                                    <span class="bullet-symbol bullet-symbol--important" aria-hidden="true"></span>
+                                    <span class="bullet-option-label">Importante</span>
+                                </span>
+                            </label>
+                        </div>
+                        <p class="bullet-journal-labels bullet-journal-label--below">método journal</p>
+                    </div>
+                <div class="form-group">
+                    <label>Categoria da Rotina</label>
+                        <p class="category-hint">Selecione uma categoria (opcional)</p>
+                        <div class="category-suggestions" id="categorySuggestions"></div>
+                        <input type="hidden" id="routineCategory" name="routineCategory">
+                    </div>
+                    <div class="wizard-step-actions wizard-step-actions--with-back">
+                        <button type="button" class="btn-voltar" data-goto="1" onclick="typeof goToStep === 'function' && goToStep(1); return false;">Voltar</button>
+                        <button type="button" class="btn-continuar" id="btnContinuarStep2" disabled onclick="typeof goToNextStep === 'function' && goToNextStep(2); return false;">Continuar</button>
+                    </div>
+                </div>
+
+                <!-- Passo 3: Detalhes da rotina (Descrição, Objetivo, Por quê) -->
+                <div class="create-step create-step-3" data-step="3" id="wizardStep3" style="display: none;">
+                    <h2 class="create-title">Detalhes da rotina</h2>
+                    <p class="details-subtitle">Opcional — mas ajuda você a se manter no caminho certo.</p>
+                    <p class="details-intro">Essa etapa ajuda você a manter consistência e foco ao longo do tempo.</p>
+
+                    <div class="detail-card">
+                        <label for="routineDescription" class="detail-card-label">Descrição</label>
+                        <p class="detail-card-hint">O que exatamente você vai fazer?</p>
+                        <textarea id="routineDescription" placeholder="Ex: Treinar musculação 4x por semana por 45 minutos" class="form-textarea form-textarea--compact" rows="2" data-autogrow></textarea>
+                        <p class="detail-card-example" aria-hidden="true">Exemplo: Treinar musculação 4x por semana por 45 minutos</p>
+                    </div>
+
+                    <div class="details-more" id="detailsMore">
+                        <button type="button" class="btn-show-more" id="btnShowMoreDetails" aria-expanded="false" aria-controls="detailsMoreContent">
+                            <span class="btn-show-more-text">Mostrar mais</span>
+                            <span class="btn-show-more-icon" aria-hidden="true">▼</span>
+                        </button>
+                        <div class="details-more-content" id="detailsMoreContent" hidden>
+                            <div class="detail-card">
+                                <label for="routineObjectives" class="detail-card-label">Objetivo principal</label>
+                                <p class="detail-card-hint">Um objetivo claro para esta rotina.</p>
+                                <textarea id="routineObjectives" placeholder="Ex: Ganhar massa muscular até junho" class="form-textarea form-textarea--compact" rows="2" data-autogrow></textarea>
+                                <p class="detail-card-example" aria-hidden="true">Exemplo: Ganhar massa muscular até junho</p>
+                            </div>
+
+                            <div class="detail-card detail-card--highlight">
+                                <label for="routineReasons" class="detail-card-label">Por que isso é importante pra você?</label>
+                                <p class="detail-card-hint">Sua motivação emocional — ela te ajuda nos dias difíceis.</p>
+                                <textarea id="routineReasons" placeholder="Ex: Quero mais disciplina e saúde no dia a dia" class="form-textarea form-textarea--compact" rows="2" data-autogrow></textarea>
+                                <p class="detail-card-example" aria-hidden="true">Exemplo: Quero mais disciplina e saúde no dia a dia</p>
+                            </div>
+
+                            <div class="detail-card">
+                                <label for="routineContext" class="detail-card-label">Contexto</label>
+                                <p class="detail-card-hint">Ex.: @trabalho, @casa, @pessoal — para filtrar no dashboard.</p>
+                                <input type="text" id="routineContext" placeholder="Ex: @trabalho" class="form-input" maxlength="80">
+                            </div>
+
+                            <div class="detail-card">
+                                <label for="newTaskInput" class="detail-card-label">Adicionar subtarefas (opcional)</label>
+                                <p class="detail-card-hint">Pequenos passos que compõem esta rotina.</p>
+                                <div class="tasks-preview" id="tasksPreview">
+                                    <div class="tasks-list" id="tasksList"></div>
+                                    <div class="add-task-container">
+                                        <input type="text" id="newTaskInput" placeholder="Ex: Separar roupa • Aquecer • Treinar" class="form-input task-input">
+                                        <button type="button" class="btn-add-task" id="addTaskBtn" aria-label="Adicionar tarefa">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                    <div class="wizard-step-actions wizard-step-actions--with-back">
+                        <button type="button" class="btn-voltar" data-goto="2" onclick="typeof goToStep === 'function' && goToStep(2); return false;">Voltar</button>
+                        <button type="button" class="btn-continuar btn-step3-action" id="btnContinuarStep3" onclick="typeof goToNextStep === 'function' && goToNextStep(3); return false;">Pular</button>
+                    </div>
+                </div>
+
+                <!-- Passo 4: Horário, Dias, Mensal, Submit -->
+                <div class="create-step create-step-4" data-step="4" id="wizardStep4" style="display: none;">
+                    <h2 class="create-title">Criar Nova Rotina</h2>
+                    <div class="form-group form-group--centered" id="routineTimeGroup">
+                        <label class="step4-time-title">Horário</label>
+                        <p class="field-hint step4-time-subtitle">Escolha se a rotina tem horário fixo ou pode ser feita a qualquer momento</p>
+                        <div class="time-choice-options time-choice-options--step4">
+                            <label class="time-choice-option time-choice-option--card" id="labelTimeAny">
+                                <input type="radio" name="timeChoice" value="any" id="timeChoiceAny">
+                                <span class="time-choice-radio"></span>
+                                <span class="time-choice-label">Sem horário fixo</span>
+                                <span class="time-choice-subtitle">Essa rotina acontecerá todos os dias, sem horário fixo</span>
+                            </label>
+                            <label class="time-choice-option time-choice-option--card" id="labelDefinirHorario">
+                                <input type="radio" name="timeChoice" value="fixed" id="timeChoiceFixed">
+                                <span class="time-choice-radio"></span>
+                                <span class="time-choice-label">Horário fixo diário</span>
+                                <span class="time-choice-subtitle">Acontece todos os dias no mesmo horário</span>
+                                <span class="time-choice-value" id="timeChoiceValueDisplay" aria-hidden="true"></span>
+                            </label>
+                        </div>
+                        <div class="time-picker-wrapper" id="timePickerWrapper">
+                            <input type="time" id="routineTime" class="time-picker-input-hidden" title="Horário">
+                            <div class="time-picker-card" id="timePickerPanel" role="group" aria-label="Selecionar horário">
+                                <p class="time-picker-card-display" id="timePickerDisplayBig" aria-live="polite">--:--</p>
+                                <div class="time-picker-card-fields">
+                                    <div class="time-picker-card-row">
+                                        <label for="timePickerHour" class="time-picker-card-label">HORA</label>
+                                        <select id="timePickerHour" class="form-input time-picker-select" aria-label="Hora">
+                                            <option value="">—</option>
+                                        </select>
+                                    </div>
+                                    <div class="time-picker-card-row">
+                                        <label for="timePickerMinute" class="time-picker-card-label">MINUTO</label>
+                                        <select id="timePickerMinute" class="form-input time-picker-select" aria-label="Minuto">
+                                            <option value="">—</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="commitment-time-warning" id="commitmentTimeWarning" style="display: none;">Compromissos costumam ter horário definido. Você pode continuar assim mesmo.</p>
+                    </div>
+                    <div class="form-group step4-weekdays-group" id="step4WeekdaysGroup" style="display: none;">
+                        <!-- Diário: 2 cards (Todos os dias / Dias específicos) -->
+                        <div class="step4-daily-days-wrap" id="step4DailyDaysWrap" style="display: none;">
+                            <label class="step4-daily-days-title">Em quais dias?</label>
+                            <p class="field-hint step4-daily-days-subtitle">Escolha se a rotina é todos os dias ou em dias específicos</p>
+                            <div class="daily-day-type-options time-choice-options time-choice-options--step4" id="dailyDayTypeOptions">
+                                <label class="time-choice-option time-choice-option--card daily-day-type-option" id="labelDailyAll">
+                                    <input type="radio" name="dailyDayType" value="all" id="dailyDayTypeAll">
+                                    <span class="time-choice-radio"></span>
+                                    <span class="time-choice-label">Todos os dias</span>
+                                    <span class="time-choice-subtitle">A rotina acontece todos os dias da semana</span>
+                                </label>
+                                <label class="time-choice-option time-choice-option--card daily-day-type-option" id="labelDailySpecific">
+                                    <input type="radio" name="dailyDayType" value="specific" id="dailyDayTypeSpecific">
+                                    <span class="time-choice-radio"></span>
+                                    <span class="time-choice-label">Dias específicos</span>
+                                    <span class="time-choice-subtitle">Escolha em quais dias da semana</span>
+                                </label>
+                            </div>
+                            <div class="daily-specific-days" id="dailySpecificDays" style="display: none;">
+                                <p class="field-hint daily-specific-days-hint">Selecione os dias em que essa rotina acontece</p>
+                            </div>
+                        </div>
+                        <!-- Semanal: só título + chips -->
+                        <div class="step4-weekly-days-wrap" id="step4WeeklyDaysWrap" style="display: none;">
+                            <label class="weekdays-group-label">Dias da semana</label>
+                            <p class="field-hint weekdays-group-hint">Selecione os dias da semana</p>
+                        </div>
+                        <!-- Chips de dias (usados em diário "específicos" e em semanal) -->
+                        <div class="weekdays-checkboxes-wrap" id="weekdaysCheckboxesWrap" style="display: none;">
+                            <div class="weekdays-checkboxes" id="weekdaysCheckboxes">
+                                <label class="weekday-chip"><input type="checkbox" name="weekDay" value="1"><span>Seg</span></label>
+                                <label class="weekday-chip"><input type="checkbox" name="weekDay" value="2"><span>Ter</span></label>
+                                <label class="weekday-chip"><input type="checkbox" name="weekDay" value="3"><span>Qua</span></label>
+                                <label class="weekday-chip"><input type="checkbox" name="weekDay" value="4"><span>Qui</span></label>
+                                <label class="weekday-chip"><input type="checkbox" name="weekDay" value="5"><span>Sex</span></label>
+                                <label class="weekday-chip"><input type="checkbox" name="weekDay" value="6"><span>Sáb</span></label>
+                                <label class="weekday-chip"><input type="checkbox" name="weekDay" value="0"><span>Dom</span></label>
+                            </div>
+                            <p class="weekdays-hint-empty" id="weekdaysHintEmpty" style="display: none;">Selecione pelo menos um dia</p>
+                        </div>
+                    </div>
+                    <div class="form-group step4-monthly-group" id="step4MonthlyGroup" style="display: none;">
+                        <label class="step4-monthly-title">REPETIÇÃO MENSAL</label>
+                        <p class="field-hint step4-monthly-subtitle">COMO ESSA ROTINA ACONTECE NO MÊS</p>
+                        <div class="monthly-type-options time-choice-options time-choice-options--step4">
+                            <label class="monthly-type-option time-choice-option time-choice-option--card">
+                                <input type="radio" name="monthlyType" value="dayOfMonth" id="monthlyTypeDayOfMonth">
+                                <span class="time-choice-radio"></span>
+                                <span class="time-choice-label">Dia fixo no mês</span>
+                                <span class="time-choice-subtitle">Todo mês no mesmo dia (ex: dia 15)</span>
+                            </label>
+                            <label class="monthly-type-option time-choice-option time-choice-option--card">
+                                <input type="radio" name="monthlyType" value="weekOfMonth" id="monthlyTypeWeekOfMonth">
+                                <span class="time-choice-radio"></span>
+                                <span class="time-choice-label">Padrão semanal</span>
+                                <span class="time-choice-subtitle">Ex: toda 2ª segunda-feira do mês</span>
+                            </label>
+                        </div>
+                        <div class="monthly-day-fixed" id="monthlyDayFixed" style="display: none;">
+                            <p class="monthly-day-fixed-label">Selecione o dia do mês</p>
+                            <div id="monthlyDayCalendar" class="monthly-day-calendar" aria-label="Selecione o dia do mês"></div>
+                            <label for="monthlyDayOfMonth" class="visually-hidden">Todo dia</label>
+                            <select id="monthlyDayOfMonth" class="form-input visually-hidden" aria-hidden="true">
+                                <option value="">—</option>
+                                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+                                <option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option>
+                                <option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option>
+                                <option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option>
+                                <option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option>
+                                <option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option>
+                            </select>
+                            <span class="monthly-day-fixed-suffix visually-hidden">do mês</span>
+                        </div>
+                        <div class="monthly-week-pattern" id="monthlyWeekPattern" style="display: none;">
+                            <div class="monthly-pattern-card">
+                                <p class="monthly-pattern-card-title">Quando no mês?</p>
+                                <p class="monthly-pattern-card-hint">Escolha em qual semana do mês e em qual dia da semana a rotina acontece (ex.: toda 2ª segunda-feira).</p>
+                                <div class="monthly-pattern-card-fields">
+                                    <div class="monthly-pattern-row">
+                                        <label for="monthlyWeekOfMonth" class="monthly-pattern-label">Semana do mês</label>
+                                        <select id="monthlyWeekOfMonth" class="form-input monthly-pattern-select">
+                                            <option value="">—</option>
+                                            <option value="1">1ª</option>
+                                            <option value="2">2ª</option>
+                                            <option value="3">3ª</option>
+                                            <option value="4">4ª</option>
+                                            <option value="last">última</option>
+                                        </select>
+                                    </div>
+                                    <div class="monthly-pattern-row">
+                                        <label for="monthlyDayOfWeek" class="monthly-pattern-label">Dia da semana</label>
+                                        <select id="monthlyDayOfWeek" class="form-input monthly-pattern-select">
+                                            <option value="">—</option>
+                                            <option value="0">domingo</option>
+                                            <option value="1">segunda</option>
+                                            <option value="2">terça</option>
+                                            <option value="3">quarta</option>
+                                            <option value="4">quinta</option>
+                                            <option value="5">sexta</option>
+                                            <option value="6">sábado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="schedule-preview" id="schedulePreview" aria-live="polite"></p>
+                    <div class="wizard-step-actions wizard-step-actions--with-back form-actions">
+                        <button type="button" class="btn-voltar" data-goto="3" onclick="typeof goToStep === 'function' && goToStep(3); return false;">Voltar</button>
+                        <button type="button" class="btn-cancel" onclick="window.location.href='dashboard.html'">Cancelar</button>
+                        <button type="button" class="btn-create" id="btnCreateRoutine" onclick="window.createRoutine && window.createRoutine(); return false;">Criar Rotina</button>
+                </div>
+                </div>
+            </form>
+
+            <!-- Indicador de progresso: bolinhas animadas (passos concluídos = verde) -->
+            <div class="wizard-progress" id="wizardProgress">
+                <div class="wizard-progress-dots wrapper">
+                    <div class="circle" data-step="1"></div>
+                    <div class="circle" data-step="2"></div>
+                    <div class="circle" data-step="3"></div>
+                    <div class="circle" data-step="4"></div>
+                    <div class="shadow"></div>
+                    <div class="shadow"></div>
+                    <div class="shadow"></div>
+                    <div class="shadow"></div>
+                </div>
+                <div class="wizard-progress-loading-bar" id="wizardProgressLoadingBar" aria-hidden="true"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Wizard de passos: funciona mesmo se create.js falhar ao carregar -->
+    <script>
+    (function() {
+      window.__wizardStep = window.__wizardStep || 1;
+      function updateStep4Visibility() {
+        var planTypeEl = document.querySelector('input[name="planType"]:checked');
+        var planType = planTypeEl ? planTypeEl.value : 'daily';
+        var weekdaysGroup = document.getElementById('step4WeekdaysGroup');
+        var monthlyGroup = document.getElementById('step4MonthlyGroup');
+        if (weekdaysGroup) weekdaysGroup.style.display = planType === 'weekly' ? 'block' : 'none';
+        if (monthlyGroup) monthlyGroup.style.display = planType === 'monthly' ? 'block' : 'none';
+      }
+      function showStep(step) {
+        var steps = document.querySelectorAll('.create-step');
+        if (!steps.length) return;
+        for (var i = 0; i < steps.length; i++) {
+          steps[i].style.display = steps[i].getAttribute('data-step') === String(step) ? 'block' : 'none';
+        }
+        if (step === 4) updateStep4Visibility();
+      }
+      function updateProgress(step) {
+        var circles = document.querySelectorAll('.wizard-progress-dots .circle');
+        for (var j = 0; j < circles.length; j++) {
+          circles[j].classList.toggle('done', j + 1 < step);
+        }
+      }
+      function nextStep(fromStep) {
+        if (fromStep === 1 && !document.querySelector('input[name="planType"]:checked')) {
+          alert('Selecione o tipo da tarefa.');
+          return;
+        }
+        if (fromStep === 2) {
+          var titleEl = document.getElementById('routineTitle');
+          var title = titleEl ? titleEl.value.trim() : '';
+          if (!title) {
+            alert('Por favor, preencha o nome da tarefa.');
+            return;
+          }
+        }
+        window.__wizardStep = fromStep + 1;
+        showStep(window.__wizardStep);
+        updateProgress(window.__wizardStep);
+      }
+      window.goToNextStep = nextStep;
+      function goToStep(step) {
+        var s = parseInt(step, 10);
+        if (s < 1 || s > 4) return;
+        window.__wizardStep = s;
+        showStep(s);
+        updateProgress(s);
+      }
+      window.goToStep = goToStep;
+      var b1 = document.getElementById('btnContinuarStep1');
+      var b2 = document.getElementById('btnContinuarStep2');
+      var b3 = document.getElementById('btnContinuarStep3');
+      if (b1) b1.addEventListener('click', function(e) { e.preventDefault(); nextStep(1); }, true);
+      if (b2) b2.addEventListener('click', function(e) { e.preventDefault(); nextStep(2); }, true);
+      if (b3) b3.addEventListener('click', function(e) { e.preventDefault(); nextStep(3); }, true);
+      function getScheduleStep4() {
+        var planTypeEl = document.querySelector('input[name="planType"]:checked');
+        var planType = planTypeEl ? planTypeEl.value : 'daily';
+        var timeEl = document.getElementById('routineTime');
+        var timeAny = document.querySelector('input[name="timeChoice"][value="any"]');
+        var schedule = {};
+        if (timeEl && (!timeAny || !timeAny.checked) && timeEl.value) schedule.time = timeEl.value;
+        if (planType === 'weekly') {
+          var weekChecked = document.querySelectorAll('input[name="weekDay"]:checked');
+          var days = [];
+          for (var i = 0; i < weekChecked.length; i++) days.push(parseInt(weekChecked[i].value, 10));
+          if (days.length) schedule.weekDays = days.sort(function(a,b){ return a - b; });
+        }
+        if (planType === 'monthly') {
+          var mt = document.querySelector('input[name="monthlyType"]:checked');
+          if (mt && mt.value === 'dayOfMonth') {
+            var v = (document.getElementById('monthlyDayOfMonth') || {}).value;
+            if (v) { schedule.monthlyType = 'dayOfMonth'; schedule.dayOfMonth = parseInt(v, 10); }
+          }
+          if (mt && mt.value === 'weekOfMonth') {
+            var w = (document.getElementById('monthlyWeekOfMonth') || {}).value;
+            var d = (document.getElementById('monthlyDayOfWeek') || {}).value;
+            if (w && d) {
+              schedule.monthlyType = 'weekOfMonth';
+              schedule.weekOfMonth = w === 'last' ? 'last' : parseInt(w, 10);
+              schedule.dayOfWeek = parseInt(d, 10);
+            }
+          }
+        }
+        return schedule;
+      }
+      function createRoutineFallback() {
+        var titleEl = document.getElementById('routineTitle');
+        var title = titleEl ? titleEl.value.trim() : '';
+        if (!title) { alert('Por favor, preencha o nome da tarefa no passo 2.'); return; }
+        var planTypeEl = document.querySelector('input[name="planType"]:checked');
+        var planType = planTypeEl ? planTypeEl.value : 'daily';
+        var bulletEl = document.querySelector('input[name="bulletType"]:checked');
+        var bulletType = bulletEl ? bulletEl.value : 'task';
+        var schedule = getScheduleStep4();
+        if (bulletType === 'commitment') {
+          var timeAny = document.querySelector('input[name="timeChoice"][value="any"]');
+          if (!(timeAny && timeAny.checked) && !schedule.time) {
+            alert('Para compromissos, defina um hor\u00e1rio ou escolha "Pode ser feita a qualquer hor\u00e1rio".');
+            return;
+          }
+        }
+        if (planType === 'weekly' && (!schedule.weekDays || !schedule.weekDays.length)) {
+          alert('Escolha pelo menos um dia da semana.');
+          return;
+        }
+        if (planType === 'monthly') {
+          if (!schedule.monthlyType || (schedule.monthlyType === 'dayOfMonth' && !schedule.dayOfMonth) ||
+              (schedule.monthlyType === 'weekOfMonth' && (schedule.weekOfMonth == null || schedule.dayOfWeek == null))) {
+            alert('Defina como a rotina se repete no m\u00eas.');
+            return;
+          }
+        }
+        var catEl = document.getElementById('routineCategory');
+        var category = null;
+        if (catEl && catEl.value) try { category = JSON.parse(catEl.value); } catch (e) {}
+        var descEl = document.getElementById('routineDescription');
+        var objEl = document.getElementById('routineObjectives');
+        var reasEl = document.getElementById('routineReasons');
+        var description = descEl ? descEl.value || '' : '';
+        var objectives = objEl ? objEl.value || '' : '';
+        var reasons = reasEl ? reasEl.value || '' : '';
+        var taskEls = document.querySelectorAll('#tasksList .task-preview-text');
+        var tasks = [];
+        for (var t = 0; t < taskEls.length; t++) {
+          var text = (taskEls[t].textContent || '').trim();
+          if (text) tasks.push({ id: Date.now() + '-' + t, text: text, completed: false, completedDates: [], createdAt: new Date().toISOString() });
+        }
+        var routines = [];
+        try { routines = JSON.parse(localStorage.getItem('localRoutines') || '[]'); } catch (e) {}
+        var newRoutine = {
+          id: String(Date.now()),
+          title: title,
+          description: description,
+          category: category,
+          tasks: tasks,
+          schedule: schedule,
+          planType: planType,
+          objectives: objectives,
+          reasons: reasons,
+          bulletType: bulletType,
+          checkIns: [],
+          completed: false,
+          createdAt: new Date().toISOString()
+        };
+        routines.push(newRoutine);
+        localStorage.setItem('localRoutines', JSON.stringify(routines));
+        alert('Rotina criada!');
+        window.location.replace('dashboard.html');
+      }
+      window.createRoutine = function() {
+        if (typeof window.__doCreateRoutine === 'function') {
+          window.__doCreateRoutine();
+        } else {
+          createRoutineFallback();
+        }
+      };
+    })();
+    </script>
+    <script src="trash-bin-button.js"></script>
+    <script src="create.js"></script>
+</body>
+</html>
